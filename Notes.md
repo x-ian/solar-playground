@@ -132,6 +132,7 @@ Current
 
 * AC and/or DC, max Amp (peak vs ongoing), max Voltage
 * Either down via hall based sensors or shunt resistor
+* Shunt resistor theory http://www.vwlowen.co.uk/arduino/current/current.htm
 * Hall-effect DC sensing could also come as a non-invasive clamp
 * AttoPilot Voltage and Current Sense Breakout - 90A [[https://www.sparkfun.com/products/9028]] 180A [[https://www.sparkfun.com/products/10644]]
 * ACS 712 (5A) example [[http://shelvin.de/den-acs-712-5a-strom-sensor-am-arduino-auslesen/]]
@@ -143,6 +144,11 @@ Voltage
 Temperature
 
 OpenEnergyMonitor [[openenergymonitor.org]] has a PV app. But it seems to only measure 2 AC lines, one for incoming PV after the inverter, another one for consumers / load.
+
+WattMeter-like projects
+
+* http://www.instructables.com/id/DIY-Amp-Hour-Meter-Arduino/
+* http://meettechniek.info/diy-instruments/arduino-wattmeter.html
 
 #### ACS 709
 
@@ -163,18 +169,22 @@ OpenEnergyMonitor [[openenergymonitor.org]] has a PV app. But it seems to only m
 * 5 V supply voltage
 * 9 €
 
-#### CSLA2CD  Honeywell  Stromsensor Halleffect  72A
+#### CSLA2CD Honeywell  Stromsensor Halleffect  72A
 
 * AC & DC, +/- 72 A
 * Supply voltage 6 - 12 VDC
 * Not for Arduino as Offset voltage is Supply voltage / 2, max Input voltage therefore equals Supply Voltage?
 * ~30 €, http://www.ebay.de/itm/231933371993
 
+#### Current Transducers
+
+* [[LEM  LA 100-P/SP13  Current Transducer, LA Series, 10A, -160A to 160A, 0.7 %, Closed Loop Output, 12 Vdc to 15 Vdc][http://uk.farnell.com/lem/la-100-p-sp13/current-transducer-100a-pcb/dp/1617427]]
 
 #### ACS 758
 
 * +/-50 AMP, Panel Mount Version.
 * Betriebsspannung: 5 V DC geregelt, oder 8 ~ 35 V DC.
+
 
 ### Connectivity
 
@@ -193,6 +203,13 @@ Raspi Zero
 Programmable load: To simulate a load, it is possible to put multiple old-school light bulbs into series, e.g. 10 x 75 watts?
 
 Enclosures?
+
+### General stuff about serial connection
+
+* Default is that serial communication is tide to a serial console to remotely monitor and log into a Raspi via serial communication
+* Raspi 3 serial / UART/ GPIO ports appear to be messed up. Mostly cause now an embedded bluetooth also is present (and overlaps/conflicts with old serial port)
+* http://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/
+* http://elinux.org/RPi_Serial_Connection
 
 ### Raspi Mobile connectivity
 
@@ -224,6 +241,49 @@ Maybe other (generic) and less config-intense way is to use an ordinary USB mobi
 * stores configs under /etc/NetworkManager/
 * NetworkManager ignores all interfaces configured in /etc/network/interfaces
 
+#### Iteadstudio Raspberry Pi GMS Addon V2.0
+
+* https://www.itead.cc/wiki/RPI_SIM800_GSM/GPRS_ADD-ON_V2.0
+* https://www.itead.cc/blog/raspberry-pi-3-add-on-supplementary-document
+
+Itead talks about their Segnix library to talk to the Addon. Itead also provides another (dedicated?) library just for the GSM add-on. Didn’t get both to work (but this was also before knowing all the serial port issues with Raspi 3). So maybe it would work once the port is properly configured. 
+* https://github.com/itead/Segnix
+* ftp://imall.iteadstudio.com/Modules/IM131224002/Library_Raspberry_sim900.zip
+
+Under https://github.com/lamondlab/IteadSIM800 a python 3 lib making use of the serial connection is available. The SMS test worked out of the box with proper serial port configs, so this might be the easiest go-to solution.
+
+For quick and dirty test the command line tool minicom should also work for invoking AT commands.
+
+#### SIM800C Quad-band Wireless GPRS GSM Modul 
+
+Appears to be similar to Iteads GSM Addon shield. At least https://github.com/lamondlab/IteadSIM800 is also able to talk to it once all serial port things are cleared
+
 #### Raspberry Pi Zero
 
 * USB OTG Networking [[https://github.com/alexellis/docker-arm/blob/master/OTG.md]]
+
+### Batteries
+
+* Lead acid batteries need to rest after being charged
+* Ambient temp is relevant for charge cycles
+* In lead-acid cells, the electrolyte (sulfuric acid) participates in the cell’s normal charge/discharge reactions. As the cells are discharged, the sulfate ions are bonded to the plates - sulfuric acid leaves the electrolyte. The process is reversed when the cell is recharged.
+* A fully charged lead-acid cell has an electrolyte that is a 25% solution of sulfuric acid in water (specific gravity about 1.26). A fully discharged lead-acid cell has virtually no sulfuric acid in its almost pure water electrolyte (specific gravity about 1.00). As the sulfuric acid concentration in the electrolyte changes so does the electrical resistance of the electrolyte, which in turn changes the internal resistance of the entire cell.
+* Store Lead acid batteries fully charged and not above 25 C (high self-discharge)
+* Don’t freeze when discharged
+* Charge level vs charge capacity. Charge level by open circuit voltage or hydrometer
+* Lead acid bats need to settle after charge
+* Charge cycle up to 14 hours
+* Wet cell, Flooded vs maintenance free/sealed/VRLA (AGM, Gel)
+
+### Solar panels
+
+monokristallinen (efficiency 25,6 %), polykristallinen (efficiency 20,8 %) und amorphen (9-10 % efficiency)
+
+#### Sun-tracking installation
+
+Testinstallation in Germany (tracking vs. stationary):
+
+* sunny Tag +35%
+* half-day cloudy +30% (~ -45% for both stationary and tracking installation compared to sunny day)
+* overcast +7% (~ -65% for both stationary and tracking installation compared to sunny day)
+* biggest gain beginning and end of day
