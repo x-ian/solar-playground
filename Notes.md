@@ -21,6 +21,10 @@ Main devices
 1. Kitchen equipment
 1. ACs
 
+### Panels
+
+Use Isc (short circuit current) to measure max possible energy harvesting. Also use as indicator for suboptimal conditions like partial shading, dirt, aging (http://dergipark.gov.tr/download/article-file/148523).
+
 ### Charger Controllers
 
 Types:
