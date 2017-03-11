@@ -188,6 +188,8 @@ WattMeter-like projects
 
 ### Connectivity
 
+### Raspi Mobile connectivity
+
 Raspi USB GSM
 
 * [[http://tutorials-raspberrypi.de/raspberry-pi-gsm-modul-mobiles-internet/]]
@@ -197,21 +199,6 @@ Raspi USB GSM
 Raspi Zero
 
 * Works with Huawei 3372 USB Stick [[https://www.raspberrypi.org/forums/viewtopic.php?t=159344&p=1034969]], e.g. from [[http://www.ebay.de/itm/Huawei-E3372-4G-LTE-150Mbit-s-USB-Surfstick-LTE-V-HiLink-Megafon-ohne-Simlock-/162278073671?hash=item25c886e547:g:5KoAAOSwx2dYJv7j]]
-
-### Misc devices
-
-Programmable load: To simulate a load, it is possible to put multiple old-school light bulbs into series, e.g. 10 x 75 watts?
-
-Enclosures?
-
-### General stuff about serial connection
-
-* Default is that serial communication is tide to a serial console to remotely monitor and log into a Raspi via serial communication
-* Raspi 3 serial / UART/ GPIO ports appear to be messed up. Mostly cause now an embedded bluetooth also is present (and overlaps/conflicts with old serial port)
-* http://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/
-* http://elinux.org/RPi_Serial_Connection
-
-### Raspi Mobile connectivity
 
 Tested with onboard USB of Raspi 3b, unclear if Raspi zero also works.
 
@@ -223,6 +210,14 @@ General tools:
 Often (always?) package usb-nodeswitch is needed.
 
 Maybe other (generic) and less config-intense way is to use an ordinary USB mobile Wifi (MiFi) dongle.
+
+#### General stuff about serial connection
+
+* Default is that serial communication is tight to a serial console to remotely monitor and log into a Raspi via serial communication
+* Raspi 3 serial / UART / GPIO ports appear to be messed up. Mostly cause now an embedded bluetooth also is present (and overlaps/conflicts with old serial port). Current conclusion is that serial comm is almost broken now with Pi 3 and requires nasty re-configs (e.g. by also reducing the CPU frequency)
+* Pre Pi 3 versions and potentially Pi Zeros (to be verified) are not affected by this
+* http://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/
+* http://elinux.org/RPi_Serial_Connection
 
 #### Huawei E3372 4G LTE
 
@@ -262,6 +257,12 @@ Appears to be similar to Iteads GSM Addon shield. At least https://github.com/la
 
 * USB OTG Networking [[https://github.com/alexellis/docker-arm/blob/master/OTG.md]]
 
+### Misc devices
+
+Programmable load: To simulate a load, it is possible to put multiple old-school light bulbs into series, e.g. 10 x 75 watts?
+
+Enclosures?
+
 ### Batteries
 
 * Lead acid batteries need to rest after being charged
@@ -281,9 +282,9 @@ monokristallinen (efficiency 25,6 %), polykristallinen (efficiency 20,8 %) und a
 
 #### Sun-tracking installation
 
-Testinstallation in Germany (tracking vs. stationary):
+Testinstallation in Germany (2-axis tracking vs. stationary):
 
-* sunny Tag +35%
+* sunny day +35%
 * half-day cloudy +30% (~ -45% for both stationary and tracking installation compared to sunny day)
 * overcast +7% (~ -65% for both stationary and tracking installation compared to sunny day)
 * biggest gain beginning and end of day
